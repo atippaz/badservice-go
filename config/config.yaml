@@ -1,0 +1,10 @@
+server:
+  port: 3001
+  allowOrigins:
+    - "*"
+  bodyLimit: "10M"
+  timeout: 30
+
+database:
+  url: "mongodb+srv://nasakun13201:pan28060@badminton.bkjs5n4.mongodb.net/"
+  DatabaseName: "badminton"
