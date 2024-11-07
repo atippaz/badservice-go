@@ -6,4 +6,5 @@ type MatchSetController interface {
 	Insert(ctx echo.Context) error
 	FindOne(ctx echo.Context) error
 	FindAll(ctx echo.Context) error
+	DeleteById(ctx echo.Context) error
 }

@@ -19,6 +19,21 @@ func NewMatchControllerImpl(matchService _matchService.MatchService) MatchContro
 	}
 }
 
+func (s *matchControllerImpl) DeleteById(ctx echo.Context) error {
+	// itemCreateRequest := new(_matchModel.matchInsertRequest)
+	// customEchoRequest := validation.NewCustomEchoRequest(ctx)
+	// if err := customEchoRequest.Bind(itemCreateRequest); err != nil {
+	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
+	// }
+
+	// newItem, err := s.matchService.Insert(itemCreateRequest)
+	// if err != nil {
+	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
+	// }
+	// return ctx.JSON(http.StatusOK, newItem)
+	return nil
+}
+
 func (s *matchControllerImpl) Insert(ctx echo.Context) error {
 	// itemCreateRequest := new(_matchModel.matchInsertRequest)
 	// customEchoRequest := validation.NewCustomEchoRequest(ctx)

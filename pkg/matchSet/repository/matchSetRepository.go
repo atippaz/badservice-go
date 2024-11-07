@@ -8,4 +8,5 @@ type MatchSetRepository interface {
 	Insert(entities.MatchSet) (*entities.MatchSet, error)
 	FindById(adminId string) (*entities.MatchSet, error)
 	FindAll() ([]entities.MatchSet, error)
+	DeleteById(matchSetId string) error
 }

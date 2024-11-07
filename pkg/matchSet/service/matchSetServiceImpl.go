@@ -15,7 +15,14 @@ func NewmatchSetServiceImpl(matchSetRepository _matchSetRepository.MatchSetRepos
 		matchSetRepository: matchSetRepository,
 	}
 }
-
+ 
+func (r *matchSetServiceImpl) DeleteById(matchSetId string) error {
+	err := r.matchSetRepository.DeleteById(matchSetId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (r *matchSetServiceImpl) Insert(matchSetRequest *_matchSetModel.MatchSetInsertRequest) (*_matchSetModel.MatchSetResult, error) {
 	newmatchSet := entities.MatchSet{
 		// Email:  matchSetRequest.Email,

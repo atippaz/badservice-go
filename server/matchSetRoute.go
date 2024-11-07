@@ -13,6 +13,6 @@ func (s *echoServer) InitMatchSetRouter() {
 	matchSetController := _matchSetController.NewmatchSetControllerImpl(matchSetService)
 
 	s.app.GET("/set", matchSetController.Insert)
-	s.app.GET("/set/:setId", matchSetController.FindAll)
-	s.app.GET("/deleteSet/:setId", matchSetController.FindAll)
+	s.app.GET("/set/:setId", matchSetController.FindOne)
+	s.app.GET("/deleteSet/:setId", matchSetController.DeleteById)
 }

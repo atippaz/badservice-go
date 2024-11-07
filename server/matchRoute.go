@@ -15,5 +15,5 @@ func (s *echoServer) InitMatchRouter() {
 	s.app.POST("/team", matchController.Insert)
 	s.app.GET("/team", matchController.FindAll)
 	s.app.GET("/team/:teamId", matchController.FindAll)
-	s.app.GET("/deleteTeam/:teamId", matchController.FindAll)
+	s.app.GET("/deleteTeam/:teamId", matchController.DeleteById)
 }

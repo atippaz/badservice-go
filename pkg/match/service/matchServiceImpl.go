@@ -16,6 +16,13 @@ func NewmatchServiceImpl(matchRepository _matchRepository.MatchRepository) Match
 	}
 }
 
+func (r *matchServiceImpl) DeleteById(matchId string) ( error) {
+	err := r.matchRepository.DeleteById(matchId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (r *matchServiceImpl) Insert(matchRequest *_matchModel.MatchInsertRequest) (*_matchModel.MatchResult, error) {
 	newmatch := entities.Match{
 		// Email:  matchRequest.Email,

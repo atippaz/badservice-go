@@ -27,12 +27,19 @@ func NewMatchSetRepositoryImpl(
 		collection: db.Connect().Collection("matchSets"),
 	}
 }
+
 func (r *MatchSetRepositoryImpl) Insert(matchSetEntity entities.MatchSet) (*entities.MatchSet, error) {
 	_, err := r.collection.InsertOne(context.TODO(), matchSetEntity)
 	if err != nil {
 		return nil, err
 	}
 	return &matchSetEntity, nil
+}
+
+func (r *MatchSetRepositoryImpl) DeleteById(matchSetId string) ( error) {
+	filter := bson.M{"id": matchSetId}
+	_, err := r.collection.DeleteOne(context.TODO(), filter)
+	return err
 }
 
 func (r *MatchSetRepositoryImpl) FindById(matchSetId string) (*entities.MatchSet, error) {

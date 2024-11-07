@@ -35,6 +35,11 @@ func (r *MatchRepositoryImpl) Insert(matchEntity entities.Match) (*entities.Matc
 	return &matchEntity, nil
 }
 
+func (r *MatchRepositoryImpl) DeleteById(matchId string) ( error) {
+	filter := bson.M{"id": matchId}
+	_, err := r.collection.DeleteOne(context.TODO(), filter)
+	return err
+}
 func (r *MatchRepositoryImpl) FindById(matchId string) (*entities.Match, error) {
 	filter := bson.M{"matchId": matchId}
 

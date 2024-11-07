@@ -8,4 +8,5 @@ type MatchService interface {
 	Insert(itemFilter *_matchModel.MatchInsertRequest) (*_matchModel.MatchResult, error)
 	FindById(matchId string) (*_matchModel.MatchResult, error)
 	FindAll() (*[]_matchModel.MatchResult, error)
+	DeleteById(matchId string)error
 }
