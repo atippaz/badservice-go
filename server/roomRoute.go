@@ -15,6 +15,6 @@ func (s *echoServer) InittRoomRouter() {
 	s.app.POST("/room", roomController.Insert)
 	s.app.GET("/room", roomController.FindAll)
 	s.app.GET("/room/:roomId", roomController.FindOne)
-	s.app.GET("/getRoomId", roomController.FindOne)
-	s.app.GET("/deleteRoom/:roomId", roomController.FindOne)
+	s.app.GET("/getRoomId", roomController.GetRoomId)
+	s.app.GET("/deleteRoom/:roomId", roomController.DeleteRoomById)
 }

@@ -15,7 +15,24 @@ func NewroomServiceImpl(roomRepository _roomRepository.RoomRepository) RoomServi
 		roomRepository: roomRepository,
 	}
 }
-
+func (r *roomServiceImpl) DeleteRoomById(roomId string)(error){
+	err:=	r.roomRepository.DeleteById(roomId)	
+	if err!= nil {
+		return err
+	}
+	return nil
+}
+func (r *roomServiceImpl) GetRoomId()(*[]string,error){
+	value,error := r.roomRepository.FindAll()
+	var selectedUsers []string
+    for _, user := range value {
+        selectedUsers = append(selectedUsers, user.ID.Hex())
+    }
+	if error !=nil {
+		return nil ,error
+	}
+	return &selectedUsers, nil
+}
 func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_roomModel.RoomResult, error) {
 	newroom := entities.Room{
 		// Email:  roomRequest.Email,
