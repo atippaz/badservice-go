@@ -4,6 +4,7 @@ import (
 	"bad-service-go/entities"
 	_roomModel "bad-service-go/pkg/room/model"
 	_roomRepository "bad-service-go/pkg/room/repository"
+	"time"
 )
 
 type roomServiceImpl struct {
@@ -35,21 +36,26 @@ func (r *roomServiceImpl) GetRoomId()(*[]string,error){
 }
 
 func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_roomModel.RoomResult, error) {
-	newroom := entities.Room{
-		// Email:  roomRequest.Email,
-		// Avatar: roomRequest.Avatar,
-		// Name:   roomRequest.Name,
-	}
-	_, err := r.roomRepository.Insert(newroom)
+	const layout = "2006-W02"
+	parsedTime, err :=time.Parse(layout, roomRequest.RoomCreateOn)
 	if err != nil {
 		return nil, err
 	}
+	newroom := entities.Room{
+		RoomName: roomRequest.RoomName,
+		RoomCreateOn:parsedTime ,
+		RoomDescription: roomRequest.RoomDescription,
+	}
+	data, erro := r.roomRepository.Insert(newroom)
+	if erro != nil {
+		return nil, erro
+	}
 	return &_roomModel.RoomResult{
-		// ID:     result.ID,
-		// Email:  result.Email,
-		// Name:   result.Name,
-		// Avatar: result.Avatar,
-	}, nil
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		}, nil
 }
 
 func (r *roomServiceImpl) FindAll() (*[]_roomModel.RoomResult, error) {

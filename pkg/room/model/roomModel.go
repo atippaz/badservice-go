@@ -11,9 +11,9 @@ type (
 	}
 
 	RoomInsertRequest struct {
-		Email  string `json:"email"`
-		Name   string `json:"name"`
-		Avatar string `json:"avatar"`
+		RoomName string `json:"roomName"` 
+		RoomCreateOn string `json:"roomCreateOn"` 
+		RoomDescription string `json:"roomDescription"`
 	}
 
 	RoomResult struct {

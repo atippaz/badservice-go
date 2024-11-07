@@ -11,10 +11,18 @@ type (
 		Avatar string `json:"avatar"`
 	}
 
+	matchset struct {
+		IsSet bool `json:"isSet"`
+		LimitSet bool `json:"limitSet"`
+	}
+
 	MatchInsertRequest struct {
-		Email  string `json:"email"`
-		Name   string `json:"name"`
-		Avatar string `json:"avatar"`
+		Members  *[]string `json:"members"`
+		Limit   *int `json:"limit"`
+		Start  *int `json:"start"`
+		Random *bool `json:"random"`
+		MatchSet matchset `json:"matchset"`
+		SetName string `json:"setName"`
 	}
 
 	MatchResult struct {
