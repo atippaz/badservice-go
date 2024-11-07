@@ -1,47 +1,88 @@
 package service
 
 import (
-	"github.com/atippaz/isekai-shop/entities"
-	_adminModel "github.com/atippaz/isekai-shop/pkg/admin/model"
-	_adminRepository "github.com/atippaz/isekai-shop/pkg/admin/repository"
+	"bad-service-go/entities"
+	_roomModel "bad-service-go/pkg/room/model"
+	_roomRepository "bad-service-go/pkg/room/repository"
+	"time"
 )
 
-type adminServiceImpl struct {
-	adminRepository _adminRepository.AdminRepository
+type roomServiceImpl struct {
+	roomRepository _roomRepository.RoomRepository
 }
 
-func NewAdminServiceImpl(adminRepository _adminRepository.AdminRepository) AdminService {
-	return &adminServiceImpl{
-		adminRepository: adminRepository,
+func NewroomServiceImpl(roomRepository _roomRepository.RoomRepository) RoomService {
+	return &roomServiceImpl{
+		roomRepository: roomRepository,
 	}
 }
-
-func (r *adminServiceImpl) Insert(adminRequest *_adminModel.AdminInsertRequest) (*_adminModel.AdminResult, error) {
-	newAdmin := entities.Admin{
-		Email:  adminRequest.Email,
-		Avatar: adminRequest.Avatar,
-		Name:   adminRequest.Name,
+func (r *roomServiceImpl) DeleteRoomById(roomId string)(error){
+	err:=	r.roomRepository.DeleteById(roomId)	
+	if err!= nil {
+		return err
 	}
-	result, err := r.adminRepository.Insert(newAdmin)
+	return nil
+}
+func (r *roomServiceImpl) GetRoomId()(*[]string,error){
+	value,error := r.roomRepository.FindAll()
+	var selectedUsers []string
+    for _, user := range value {
+        selectedUsers = append(selectedUsers, user.ID.Hex())
+    }
+	if error !=nil {
+		return nil ,error
+	}
+	return &selectedUsers, nil
+}
+
+func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_roomModel.RoomResult, error) {
+	const layout = "2006-W02"
+	parsedTime, err :=time.Parse(layout, roomRequest.RoomCreateOn)
 	if err != nil {
 		return nil, err
 	}
-	return &_adminModel.AdminResult{
-		ID:     result.ID,
-		Email:  result.Email,
-		Name:   result.Name,
-		Avatar: result.Avatar,
-	}, nil
+	newroom := entities.Room{
+		RoomName: roomRequest.RoomName,
+		RoomCreateOn:parsedTime ,
+		RoomDescription: roomRequest.RoomDescription,
+	}
+	data, erro := r.roomRepository.Insert(newroom)
+	if erro != nil {
+		return nil, erro
+	}
+	return &_roomModel.RoomResult{
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		}, nil
 }
-func (r *adminServiceImpl) FindById(adminId string) (*_adminModel.AdminResult, error) {
-	result, error := r.adminRepository.FindById(adminId)
+
+func (r *roomServiceImpl) FindAll() (*[]_roomModel.RoomResult, error) {
+	result, err := r.roomRepository.FindAll()
+	if err != nil {
+		return nil, err
+	}
+	var res []_roomModel.RoomResult 
+	for _,data := range result{
+		res = append(res, _roomModel.RoomResult{
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		})
+	}
+	return &res,nil
+}
+func (r *roomServiceImpl) FindById(roomId string) (*_roomModel.RoomResult, error) {
+	data, error := r.roomRepository.FindById(roomId)
 	if error != nil {
 		return nil, error
 	}
-	return &_adminModel.AdminResult{
-		ID:     result.ID,
-		Email:  result.Email,
-		Name:   result.Name,
-		Avatar: result.Avatar,
-	}, nil
+	return &_roomModel.RoomResult{
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		}, nil
 }

@@ -27,6 +27,12 @@ func NewRoomRepositoryImpl(
 		collection: db.Connect().Collection("rooms"),
 	}
 }
+func (r *RoomRepositoryImpl) DeleteById(id string) error {
+	filter := bson.M{"id": id}
+	_, err := r.collection.DeleteOne(context.TODO(), filter)
+	return err
+}
+
 func (r *RoomRepositoryImpl) Insert(roomEntity entities.Room) (*entities.Room, error) {
 	_, err := r.collection.InsertOne(context.TODO(), roomEntity)
 	if err != nil {

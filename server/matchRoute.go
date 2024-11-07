@@ -1,19 +1,19 @@
 package server
 
 import (
-	_adminController "bad-service-go/pkg/room/controller"
-	_adminRepository "bad-service-go/pkg/room/repository"
-	_adminService "bad-service-go/pkg/room/service"
+	_matchController "bad-service-go/pkg/match/controller"
+	_matchRepository "bad-service-go/pkg/match/repository"
+	_matchService "bad-service-go/pkg/match/service"
 )
 
 func (s *echoServer) InitMatchRouter() {
 
-	adminRepository := _adminRepository.NewRoomRepositoryImpl(s.app.Logger, s.db)
-	adminService := _adminService.NewAdminServiceImpl(adminRepository)
-	adminController := _adminController.RoomController(adminService)
+	matchRepository := _matchRepository.NewmatchRepositoryImpl(s.app.Logger, s.db)
+	matchService := _matchService.NewmatchServiceImpl(matchRepository)
+	matchController := _matchController.NewMatchControllerImpl(matchService)
 
-	s.app.POST("/team", adminController.Insert)
-	s.app.GET("/team", adminController.GetAll)
-	s.app.GET("/team/:teamId", adminController.GetByID)
-	s.app.GET("/deleteTeam/:teamId", adminController.Update)
+	s.app.POST("/team", matchController.Insert)
+	s.app.GET("/team", matchController.FindAll)
+	s.app.GET("/team/:teamId", matchController.FindAll)
+	s.app.GET("/deleteTeam/:teamId", matchController.DeleteById)
 }
