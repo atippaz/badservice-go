@@ -1,20 +1,20 @@
 package server
 
 import (
-	_adminController "github.com/atippaz/isekai-shop/pkg/admin/controller"
-	_adminRepository "github.com/atippaz/isekai-shop/pkg/admin/repository"
-	_adminService "github.com/atippaz/isekai-shop/pkg/admin/service"
+	_roomController "bad-service-go/pkg/room/controller"
+	_roomRepository "bad-service-go/pkg/room/repository"
+	_roomService "bad-service-go/pkg/room/service"
 )
 
 func (s *echoServer) InittRoomRouter() {
 
-	adminRepository := _adminRepository.NewAdminRepositoryImpl(s.app.Logger, s.db)
-	adminService := _adminService.NewAdminServiceImpl(adminRepository)
-	adminController := _adminController.NewAdminControllerImpl(adminService)
+	roomRepository := _roomRepository.NewRoomRepositoryImpl(s.app.Logger, s.db)
+	roomService := _roomService.NewroomServiceImpl(roomRepository)
+	roomController := _roomController.NewroomControllerImpl(roomService)
 
-	s.app.POST("/room", adminController.Insert)
-	s.app.GET("/room", adminController.GetAll)
-	s.app.GET("/room/:roomId", adminController.GetAll)
-	s.app.GET("/getRoomId", adminController.GetByID)
-	s.app.GET("/deleteRoom/:roomId", adminController.Update)
+	s.app.POST("/room", roomController.Insert)
+	s.app.GET("/room", roomController.FindAll)
+	s.app.GET("/room/:roomId", roomController.FindOne)
+	s.app.GET("/getRoomId", roomController.FindOne)
+	s.app.GET("/deleteRoom/:roomId", roomController.FindOne)
 }

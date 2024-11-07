@@ -1,18 +1,18 @@
 package server
 
 import (
-	_adminController "github.com/atippaz/isekai-shop/pkg/admin/controller"
-	_adminRepository "github.com/atippaz/isekai-shop/pkg/admin/repository"
-	_adminService "github.com/atippaz/isekai-shop/pkg/admin/service"
+	_matchSetController "bad-service-go/pkg/matchSet/controller"
+	_matchSetRepository "bad-service-go/pkg/matchSet/repository"
+	_matchSetService "bad-service-go/pkg/matchSet/service"
 )
 
 func (s *echoServer) InitMatchSetRouter() {
 
-	adminRepository := _adminRepository.NewAdminRepositoryImpl(s.app.Logger, s.db)
-	adminService := _adminService.NewAdminServiceImpl(adminRepository)
-	adminController := _adminController.NewAdminControllerImpl(adminService)
+	matchSetRepository := _matchSetRepository.NewMatchSetRepositoryImpl(s.app.Logger, s.db)
+	matchSetService := _matchSetService.NewmatchSetServiceImpl(matchSetRepository)
+	matchSetController := _matchSetController.NewmatchSetControllerImpl(matchSetService)
 
-	s.app.GET("/set", adminController.Insert)
-	s.app.GET("/set/:setId", adminController.GetAll)
-	s.app.GET("/deleteSet/:setId", adminController.Update)
+	s.app.GET("/set", matchSetController.Insert)
+	s.app.GET("/set/:setId", matchSetController.FindAll)
+	s.app.GET("/deleteSet/:setId", matchSetController.FindAll)
 }

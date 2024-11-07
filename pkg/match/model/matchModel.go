@@ -1,20 +1,20 @@
 package model
 
 type (
-	Room struct {
+	Match struct {
 		ID     string `json:"id"`
 		Email  string `json:"email"`
 		Name   string `json:"name"`
 		Avatar string `json:"avatar"`
 	}
 
-	RoomInsertRequest struct {
+	MatchInsertRequest struct {
 		Email  string `json:"email"`
 		Name   string `json:"name"`
 		Avatar string `json:"avatar"`
 	}
 
-	RoomResult struct {
+	MatchResult struct {
 		ID     string `json:"id"`
 		Email  string `json:"email"`
 		Name   string `json:"name"`

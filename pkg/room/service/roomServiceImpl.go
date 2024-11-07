@@ -1,47 +1,60 @@
 package service
 
 import (
-	"github.com/atippaz/isekai-shop/entities"
-	_adminModel "github.com/atippaz/isekai-shop/pkg/admin/model"
-	_adminRepository "github.com/atippaz/isekai-shop/pkg/admin/repository"
+	"bad-service-go/entities"
+	_roomModel "bad-service-go/pkg/room/model"
+	_roomRepository "bad-service-go/pkg/room/repository"
 )
 
-type adminServiceImpl struct {
-	adminRepository _adminRepository.AdminRepository
+type roomServiceImpl struct {
+	roomRepository _roomRepository.RoomRepository
 }
 
-func NewAdminServiceImpl(adminRepository _adminRepository.AdminRepository) AdminService {
-	return &adminServiceImpl{
-		adminRepository: adminRepository,
+func NewroomServiceImpl(roomRepository _roomRepository.RoomRepository) RoomService {
+	return &roomServiceImpl{
+		roomRepository: roomRepository,
 	}
 }
 
-func (r *adminServiceImpl) Insert(adminRequest *_adminModel.AdminInsertRequest) (*_adminModel.AdminResult, error) {
-	newAdmin := entities.Admin{
-		Email:  adminRequest.Email,
-		Avatar: adminRequest.Avatar,
-		Name:   adminRequest.Name,
+func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_roomModel.RoomResult, error) {
+	newroom := entities.Room{
+		// Email:  roomRequest.Email,
+		// Avatar: roomRequest.Avatar,
+		// Name:   roomRequest.Name,
 	}
-	result, err := r.adminRepository.Insert(newAdmin)
+	_, err := r.roomRepository.Insert(newroom)
 	if err != nil {
 		return nil, err
 	}
-	return &_adminModel.AdminResult{
-		ID:     result.ID,
-		Email:  result.Email,
-		Name:   result.Name,
-		Avatar: result.Avatar,
+	return &_roomModel.RoomResult{
+		// ID:     result.ID,
+		// Email:  result.Email,
+		// Name:   result.Name,
+		// Avatar: result.Avatar,
 	}, nil
 }
-func (r *adminServiceImpl) FindById(adminId string) (*_adminModel.AdminResult, error) {
-	result, error := r.adminRepository.FindById(adminId)
+func (r *roomServiceImpl) FindAll() (*[]_roomModel.RoomResult, error) {
+	_, error := r.roomRepository.FindAll()
 	if error != nil {
 		return nil, error
 	}
-	return &_adminModel.AdminResult{
-		ID:     result.ID,
-		Email:  result.Email,
-		Name:   result.Name,
-		Avatar: result.Avatar,
+	// return &_roomModel.RoomResult{
+	// 	// ID:     result.ID,
+	// 	// Email:  result.Email,
+	// 	// Name:   result.Name,
+	// 	// Avatar: result.Avatar,
+	// }, nil
+	return nil,nil
+}
+func (r *roomServiceImpl) FindById(roomId string) (*_roomModel.RoomResult, error) {
+	_, error := r.roomRepository.FindById(roomId)
+	if error != nil {
+		return nil, error
+	}
+	return &_roomModel.RoomResult{
+		// ID:     result.ID,
+		// Email:  result.Email,
+		// Name:   result.Name,
+		// Avatar: result.Avatar,
 	}, nil
 }

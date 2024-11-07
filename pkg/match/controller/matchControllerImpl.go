@@ -2,31 +2,31 @@ package controller
 
 import (
 
-	// validation "bad-service-go/pkg/room"
-	// _roomModel "bad-service-go/pkg/room/model"
-	_roomService "bad-service-go/pkg/room/service"
+	// validation "bad-service-go/pkg/match"
+	// _matchModel "bad-service-go/pkg/match/model"
+	_matchService "bad-service-go/pkg/match/service"
 
 	"github.com/labstack/echo/v4"
 )
 
-type roomControllerImpl struct {
-	roomService _roomService.RoomService
+type matchControllerImpl struct {
+	matchService _matchService.MatchService
 }
 
-func NewroomControllerImpl(roomService _roomService.RoomService) RoomController {
-	return &roomControllerImpl{
-		roomService: roomService,
+func NewMatchControllerImpl(matchService _matchService.MatchService) MatchController {
+	return &matchControllerImpl{
+		matchService: matchService,
 	}
 }
 
-func (s *roomControllerImpl) Insert(ctx echo.Context) error {
-	// itemCreateRequest := new(_roomModel.roomInsertRequest)
+func (s *matchControllerImpl) Insert(ctx echo.Context) error {
+	// itemCreateRequest := new(_matchModel.matchInsertRequest)
 	// customEchoRequest := validation.NewCustomEchoRequest(ctx)
 	// if err := customEchoRequest.Bind(itemCreateRequest); err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
 
-	// newItem, err := s.roomService.Insert(itemCreateRequest)
+	// newItem, err := s.matchService.Insert(itemCreateRequest)
 	// if err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
@@ -34,14 +34,14 @@ func (s *roomControllerImpl) Insert(ctx echo.Context) error {
 	return nil
 }
 
-func (s *roomControllerImpl) FindAll(ctx echo.Context) error {
-	// itemCreateRequest := new(_roomModel.roomInsertRequest)
+func (s *matchControllerImpl) FindAll(ctx echo.Context) error {
+	// itemCreateRequest := new(_matchModel.matchInsertRequest)
 	// customEchoRequest := validation.NewCustomEchoRequest(ctx)
 	// if err := customEchoRequest.Bind(itemCreateRequest); err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
 
-	// newItem, err := s.roomService.Insert(itemCreateRequest)
+	// newItem, err := s.matchService.Insert(itemCreateRequest)
 	// if err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
@@ -49,14 +49,14 @@ func (s *roomControllerImpl) FindAll(ctx echo.Context) error {
 	return nil
 }
 
-func (s *roomControllerImpl) FindOne(ctx echo.Context) error {
-	// itemCreateRequest := new(_roomModel.roomInsertRequest)
+func (s *matchControllerImpl) FindOne(ctx echo.Context) error {
+	// itemCreateRequest := new(_matchModel.matchInsertRequest)
 	// customEchoRequest := validation.NewCustomEchoRequest(ctx)
 	// if err := customEchoRequest.Bind(itemCreateRequest); err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
 
-	// newItem, err := s.roomService.Insert(itemCreateRequest)
+	// newItem, err := s.matchService.Insert(itemCreateRequest)
 	// if err != nil {
 	// 	return custom.CustomError(ctx, http.StatusInternalServerError, err)
 	// }
