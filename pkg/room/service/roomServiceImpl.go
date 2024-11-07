@@ -33,6 +33,7 @@ func (r *roomServiceImpl) GetRoomId()(*[]string,error){
 	}
 	return &selectedUsers, nil
 }
+
 func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_roomModel.RoomResult, error) {
 	newroom := entities.Room{
 		// Email:  roomRequest.Email,
@@ -50,28 +51,32 @@ func (r *roomServiceImpl) Insert(roomRequest *_roomModel.RoomInsertRequest) (*_r
 		// Avatar: result.Avatar,
 	}, nil
 }
+
 func (r *roomServiceImpl) FindAll() (*[]_roomModel.RoomResult, error) {
-	_, error := r.roomRepository.FindAll()
-	if error != nil {
-		return nil, error
+	result, err := r.roomRepository.FindAll()
+	if err != nil {
+		return nil, err
 	}
-	// return &_roomModel.RoomResult{
-	// 	// ID:     result.ID,
-	// 	// Email:  result.Email,
-	// 	// Name:   result.Name,
-	// 	// Avatar: result.Avatar,
-	// }, nil
-	return nil,nil
+	var res []_roomModel.RoomResult 
+	for _,data := range result{
+		res = append(res, _roomModel.RoomResult{
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		})
+	}
+	return &res,nil
 }
 func (r *roomServiceImpl) FindById(roomId string) (*_roomModel.RoomResult, error) {
-	_, error := r.roomRepository.FindById(roomId)
+	data, error := r.roomRepository.FindById(roomId)
 	if error != nil {
 		return nil, error
 	}
 	return &_roomModel.RoomResult{
-		// ID:     result.ID,
-		// Email:  result.Email,
-		// Name:   result.Name,
-		// Avatar: result.Avatar,
-	}, nil
+		RoomId: data.ID.Hex(),
+		RoomName: data.RoomName,
+		RoomDescription: data.RoomDescription,
+		RoomCreateOn: data.RoomCreateOn,
+		}, nil
 }

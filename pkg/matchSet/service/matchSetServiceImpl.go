@@ -41,27 +41,38 @@ func (r *matchSetServiceImpl) Insert(matchSetRequest *_matchSetModel.MatchSetIns
 	}, nil
 }
 func (r *matchSetServiceImpl) FindAll() (*[]_matchSetModel.MatchSetResult, error) {
-	_, error := r.matchSetRepository.FindAll()
+	result, error := r.matchSetRepository.FindAll()
 	if error != nil {
 		return nil, error
 	}
-	// return &_matchSetModel.matchSetResult{
-	// 	// ID:     result.ID,
-	// 	// Email:  result.Email,
-	// 	// Name:   result.Name,
-	// 	// Avatar: result.Avatar,
-	// }, nil
-	return nil,nil
+	var res []_matchSetModel.MatchSetResult
+	for _,data := range result{
+		res = append(res, _matchSetModel.MatchSetResult{
+			RoomId: data.RoomID,
+			SetId: data.ID.Hex(),
+			TeamName: data.SetName,
+			CourtNumber: data.CourtNumber,
+			AllTeam: data.AllTeam,
+			WinScore: data.WinScore,
+			TeamLimit: data.TeamLimit,
+			WinStreak: data.WinStreak,
+		})
+	}
+	return &res,nil
 }
 func (r *matchSetServiceImpl) FindById(matchSetId string) (*_matchSetModel.MatchSetResult, error) {
-	_, error := r.matchSetRepository.FindById(matchSetId)
+	data, error := r.matchSetRepository.FindById(matchSetId)
 	if error != nil {
 		return nil, error
 	}
 	return &_matchSetModel.MatchSetResult{
-		// ID:     result.ID,
-		// Email:  result.Email,
-		// Name:   result.Name,
-		// Avatar: result.Avatar,
+		RoomId: data.RoomID,
+		SetId: data.ID.Hex(),
+		TeamName: data.SetName,
+		CourtNumber: data.CourtNumber,
+		AllTeam: data.AllTeam,
+		WinScore: data.WinScore,
+		TeamLimit: data.TeamLimit,
+		WinStreak: data.WinStreak,
 	}, nil
 }

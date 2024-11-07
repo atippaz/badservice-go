@@ -23,6 +23,7 @@ func (r *matchServiceImpl) DeleteById(matchId string) ( error) {
 	}
 	return nil
 }
+
 func (r *matchServiceImpl) Insert(matchRequest *_matchModel.MatchInsertRequest) (*_matchModel.MatchResult, error) {
 	newmatch := entities.Match{
 		// Email:  matchRequest.Email,
@@ -40,28 +41,41 @@ func (r *matchServiceImpl) Insert(matchRequest *_matchModel.MatchInsertRequest) 
 		// Avatar: result.Avatar,
 	}, nil
 }
+
 func (r *matchServiceImpl) FindAll() (*[]_matchModel.MatchResult, error) {
-	_, error := r.matchRepository.FindAll()
+	result, error := r.matchRepository.FindAll()
 	if error != nil {
 		return nil, error
 	}
-	// return &_matchModel.matchResult{
-	// 	// ID:     result.ID,
-	// 	// Email:  result.Email,
-	// 	// Name:   result.Name,
-	// 	// Avatar: result.Avatar,
-	// }, nil
-	return nil,nil
+	var res []_matchModel.MatchResult
+	for _,data  := range result{
+		res = append(res, _matchModel.MatchResult{
+		RoomId: data.RoomID,
+		TeamId: data.ID.Hex(),
+		TeamName: data.SetName,
+		CourtNumber:data.CourtNumber,
+		AllTeam: data.AllTeam,
+		WinScore: data.WinScore,
+		TeamLimit: data.TeamLimit,
+		WinStreak: data.WinStreak,
+		})
+	}
+	return &res, nil
 }
+
 func (r *matchServiceImpl) FindById(matchId string) (*_matchModel.MatchResult, error) {
-	_, error := r.matchRepository.FindById(matchId)
+	data, error := r.matchRepository.FindById(matchId)
 	if error != nil {
 		return nil, error
 	}
 	return &_matchModel.MatchResult{
-		// ID:     result.ID,
-		// Email:  result.Email,
-		// Name:   result.Name,
-		// Avatar: result.Avatar,
-	}, nil
+		RoomId: data.RoomID,
+		TeamId: data.ID.Hex(),
+		TeamName: data.SetName,
+		CourtNumber:data.CourtNumber,
+		AllTeam: data.AllTeam,
+		WinScore: data.WinScore,
+		TeamLimit: data.TeamLimit,
+		WinStreak: data.WinStreak,
+		}, nil
 }
